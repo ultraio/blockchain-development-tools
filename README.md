@@ -8,7 +8,9 @@ Binaries provided in this repository are specifically targeted towards Ubuntu-18
 
 ## Ubuntu-18.04
 
-### Installing GIT and dependencies
+### Installing Git and dependencies
+
+To make sure you have the latest version of the tools, scripts and instructions you should install Git and clone this repository. This is optional and you can instead opt-out and just download the "Source code" archive from the latest release.
 
 ```sh
 sudo apt install git-all
@@ -18,18 +20,18 @@ sudo apt install git-all
 
 Installing Docker on Ubuntu-18.04 is highly optional since you can run the binaries natively. In case you want to still utilize Docker then you should proceed with [official Docker installation instructions](https://docs.docker.com/engine/install/ubuntu/)
 
-## Windows
-
-There is no official support for Windows platform at the moment
-
-### Installing GIT
-
-### Installing Docker
-
 ## Other platforms
 
-There is no official support for other platforms at the moment
+For other platforms binaries are not provided. As such you will have to utilize the Docker image for the purposes of running a node, compiling smart contracts and running tests
 
 ### Installing GIT
 
+Depending on the platform the instructions may differ and you should check the instructions on the [official Git website](https://git-scm.com/downloads). Installing Git is optional and you can instead download the "Source code" archive from the latest release
+
 ### Installing Docker
+
+# Getting development package
+
+# Further guides
+
+To proceed with development tools usage please refer to the [dedicated starting guides](guides/README.md)
