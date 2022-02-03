@@ -34,4 +34,4 @@ Depending on the platform the instructions may differ and you should check the i
 
 # Further guides
 
-To proceed with development tools usage please refer to the [dedicated starting guides](guides/README.md)
+To proceed with development tools usage please refer to the [dedicated starting guides](guides)
