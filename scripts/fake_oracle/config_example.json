@@ -1,10 +1,11 @@
 [
-{"source": "", "rate":"1.00000000 DUOS", "volume":"1.00000000 USD", "timestamp": 100},
-{"source": "", "rate":"", "volume":"1.00000000 USD", "timestamp": 105},
+{"source": "*", "rate":"1.00000000 DUOS", "volume":"1.00000000 USD", "timestamp": 100},
+{"source": "*", "rate":"", "volume":"", "timestamp": 105},
 {"source": "ubitfinex", "rate":"1.00000000 DUOS", "volume":"1.00000000 USD", "timestamp": 105},
 {"source": "ubitfinex", "rate":"2.00000000 DUOS", "volume":"1.00000000 USD", "timestamp": 110},
 {"source": "ukucoin", "rate":"2.00000000 DUOS", "volume":"1.00000000 USD", "timestamp": 115},
-{"source": "ubitfinex", "rate":"", "volume":"1.00000000 USD", "timestamp": 120},
-{"source": "", "rate":"3.00000000 DUOS", "volume":"1.00000000 USD", "timestamp": 125},
-{"source": "", "rate":"4.00000000 DUOS", "volume":"1.00000000 USD", "timestamp": 130}
+{"source": "ubitfinex", "rate":"", "volume":"", "timestamp": 120},
+{"source": "*", "rate":"3.00000000 DUOS", "volume":"1.00000000 USD", "timestamp": 125},
+{"source": "*", "rate":"4.00000000 DUOS", "volume":"1.00000000 USD", "timestamp": 130},
+{"stop": true, "timestamp": 140}
 ]
