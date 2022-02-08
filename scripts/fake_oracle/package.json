@@ -1,0 +1,44 @@
+{
+    "name": "@ultraio/fake-oracle",
+    "version": "1.0.0",
+    "description": "",
+    "main": "fake_oracle.js",
+    "scripts": {},
+    "bin": {},
+    "publishConfig": {
+        "access": "public"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "args": "^5.0.1",
+        "chalk": "^3.0.0",
+        "eosjs": "^21.0.3",
+        "eosjs-ecc": "^4.0.7",
+        "esm": "^3.2.25",
+        "get-port": "^5.1.1",
+        "inquirer": "^7.1.0",
+        "inquirer-fuzzy-path": "^2.2.0",
+        "isomorphic-fetch": "^2.2.1",
+        "listr": "^0.14.3",
+        "node-fetch": "^2.6.0",
+        "request": "^2.88.0",
+        "rimraf": "^3.0.2",
+        "util": "^0.12.1",
+        "wait-port": "^0.2.9"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "cross-env": "^7.0.2",
+        "mocha": "^6.2.0",
+        "pkg": "^4.4.6"
+    },
+    "pkg": {
+        "scripts": [
+            "fake_oracle.js"
+        ],
+        "assets": [
+            "config_example.json"
+        ]
+    }
+}
