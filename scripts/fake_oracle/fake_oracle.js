@@ -108,12 +108,23 @@ class FakeOracle {
         return JSON.parse(await cleos(this.nodeos)(`get table eosio.oracle eosio.oracle feeddata`, {stdout:true}));
     }
 
+    toAssetConversionRate = (value) => {
+        if(value === 0 || value === null) return '';
+        return value.toFixed(this.conversion_rate_precision) + ' ' + this.conversion_rate_symbol;
+    }
+
+    toAssetTradingVolume = (value) => {
+        if(value === 0 || value === null) return '';
+        return value.toFixed(this.trading_volume_precision) + ' ' + this.trading_volume_symbol;
+    }
+
     registerExchange = async (source, rate = '', volume = '') => {
         assert(await cleos(this.nodeos)(`push action eosio.oracle regexchange '["${source}"]' -p ultra.oracle -f`), `Failed to register exchange "${source}"`);
-        this.exchanges.push({source: source, rate_to_push: rate, volume_to_push: volume});
+        this.exchanges.push({source: source, rate_to_push: this.toAssetConversionRate(rate), volume_to_push: this.toAssetTradingVolume(volume)});
     }
 
     init = async () => {
+        // allow importing private keys from CLI
         if(this.privateKey) {
             let keys = await getPublicKeys();
             this.privateKey.map(async pkey => {
@@ -130,6 +141,7 @@ class FakeOracle {
                 }
             });
         }
+        // allow providing custom pushrate config
         try {
             if (fs.existsSync(this.config)) {
               this.rates = require(this.config);
@@ -138,7 +150,7 @@ class FakeOracle {
                 process.exit(1);
             } else {
                 // if default config file does not exist need to replace it with default rates
-                this.rates = [{source: '*', rate: '1.00000000 DUOS', volume: '1.00000000 USD', timestamp: 0}];
+                this.rates = [{source: '*', rate: 1.0, volume: 1.0, timestamp: 0}];
                 console.log('Using default constant oracle rate');
             }
         }
@@ -149,7 +161,17 @@ class FakeOracle {
 
         // get the list of exchanges registered on chain and populate the local list of exchange to push rates for
         let exchanges_feed = await this.getExchangesFeed();
+        // empty string for rate or trading volume indicate that there is no need to push rate for this exchange
         this.exchanges = exchanges_feed.rows.map(row => { return {source: row.source, rate_to_push: '', volume_to_push: ''}; } );
+
+        // get on-chain conversion rate symbol and trading volume symbol
+        let oraclestate = JSON.parse(await cleos(this.nodeos)(`get table eosio.oracle eosio.oracle oraclestate`, {stdout:true}));
+        let split = oraclestate.rows[0].conversion_rate_symbol.split(',');
+        this.conversion_rate_precision = parseInt(split[0], 10);
+        this.conversion_rate_symbol = split[1];
+        split = oraclestate.rows[0].trading_volume_symbol.split(',');
+        this.trading_volume_precision = parseInt(split[0], 10);
+        this.trading_volume_symbol = split[1];
     }
 
     getTimestamp = async () => Math.floor(Date.parse(JSON.parse(await cleos(this.nodeos)(`get info`, {stdout:true})).head_block_time) / 1000);
@@ -171,16 +193,16 @@ class FakeOracle {
                     // using * allows to modify all exchanges at once
                     if(this.rates[this.rate_lookup_index].source === '*') {
                         this.exchanges = this.exchanges.map(exchange => {
-                            exchange.rate_to_push = this.rates[this.rate_lookup_index].rate;
-                            exchange.volume_to_push = this.rates[this.rate_lookup_index].volume;
+                            exchange.rate_to_push = this.toAssetConversionRate(this.rates[this.rate_lookup_index].rate);
+                            exchange.volume_to_push = this.toAssetTradingVolume(this.rates[this.rate_lookup_index].volume);
                             return exchange;
                         });
-                        if(verbose_output) console.log(`Switched pushrate schedule of all exchanges to rate ${this.rates[this.rate_lookup_index].rate} and volume ${this.rates[this.rate_lookup_index].volume}`);
+                        if(verbose_output && this.exchanges.length > 0) console.log(`Switched pushrate schedule of all exchanges to rate ${this.exchanges[0].rate_to_push} and volume ${this.exchanges[0].volume_to_push}`);
                     } else {
                         const index = this.exchanges.findIndex((exchange => exchange.source === this.rates[this.rate_lookup_index].source));
                         if(index >= 0) {
-                            this.exchanges[index].rate_to_push = this.rates[this.rate_lookup_index].rate;
-                            this.exchanges[index].volume_to_push = this.rates[this.rate_lookup_index].volume;
+                            this.exchanges[index].rate_to_push = this.toAssetConversionRate(this.rates[this.rate_lookup_index].rate);
+                            this.exchanges[index].volume_to_push = this.toAssetTradingVolume(this.rates[this.rate_lookup_index].volume);
                             if(verbose_output) console.log(`Switched pushrate schedule of exchange "${this.rates[this.rate_lookup_index].source}" to rate ${this.exchanges[index].rate_to_push} and volume ${this.exchanges[index].volume_to_push}`);
                         } else {
                             console.log(`Unknown exchange "${this.rates[this.rate_lookup_index].source}", trying to register`);
