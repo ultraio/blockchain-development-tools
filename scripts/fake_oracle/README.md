@@ -59,7 +59,7 @@ Note that all CLI arguments of this tool are optional
 
 For the basic example on the `config.json` you can refer to [config_example.json](config_example.json)
 
-Information from the configuration file is assumed to be an array of objects each of which should be specifying the `source` which provides the conversion rate, conversion `rate` itself, 24 hour trading `volume` and a `timestamp`. Example:
+Information from the configuration file is assumed to be an array of objects each of which should be specifying the `source` which provides the conversion rate, conversion `rate` itself, 24 hour trading `volume` and a `timestamp`. `rate` is specified in USD/UOS unit, 24 trading volume is specified in USD, timestamp is specified in seconds. Example: rate of 1.2345 USD/UOS pushed by `exchange` with 24 trading volume of 500000 USD 
 
 ```json
 [
