@@ -77,10 +77,6 @@ async function execute(cmd, options = {}) {
     return parseResult(exec, cmd, options);
 }
 
-async function executeFile(cmd, ...args) {
-    return parseResult(execFile, cmd, args);
-}
-
 const cleos = endpoint => async (cmd, options = {}) => {
     return execute(`cleos ${cmd.indexOf('-u') > -1 ? '' : `-u ${endpoint}`} ${cmd}`, options);
 };
@@ -268,14 +264,4 @@ class CLI {
 }
 
 const instance = new CLI();
-let triggered = false;
-module.exports = {
-    cli:async args => {
-        triggered = true;
-        instance.main(args);
-    }
-};
-
-setTimeout(() => {
-    if(!triggered) instance.main(process.argv);
-}, 100);
+instance.main(process.argv);
