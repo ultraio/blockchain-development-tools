@@ -118,7 +118,7 @@ class FakeOracle {
         return value.toFixed(this.trading_volume_precision) + ' ' + this.trading_volume_symbol;
     }
 
-    registerExchange = async (source, rate = '', volume = '') => {
+    registerExchange = async (source, rate = null, volume = null) => {
         assert(await cleos(this.nodeos)(`push action eosio.oracle regexchange '["${source}"]' -p ultra.oracle -f`), `Failed to register exchange "${source}"`);
         this.exchanges.push({source: source, rate_to_push: this.toAssetConversionRate(rate), volume_to_push: this.toAssetTradingVolume(volume)});
     }
