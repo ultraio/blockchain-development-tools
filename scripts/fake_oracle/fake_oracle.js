@@ -93,7 +93,12 @@ class FakeOracle {
         this.privateKey = flags.privateKey ? flags.privateKey : null;
         // support is only provided for a list of private keys, if only one key is provided then turn it into array
         if(this.privateKey && !Array.isArray(this.privateKey)) this.privateKey = [this.privateKey];
-        this.config = flags.config ? flags.config : defaultConfig;
+        // config option is provided with either a string argument or with no arguments in which case it will be boolean
+        this.config = '';
+        if(flags.config) {
+            if((typeof flags.config) === 'boolean') this.config = defaultConfig;
+            else this.config = flags.config;
+        }
         this.push_interval = flags.interval ? flags.interval : 1000;
         this.rates = {};
         this.finished = false;
@@ -139,15 +144,15 @@ class FakeOracle {
         }
         // allow providing custom pushrate config
         try {
-            if (fs.existsSync(this.config)) {
-              this.rates = require(this.config);
-            } else if(this.flags.config) {
-                console.error(chalk.bold.red(`Config file does not exist: "${this.flags.config}"`));
-                process.exit(1);
-            } else {
-                // if default config file does not exist need to replace it with default rates
+            if(this.config === '') {
+                // if config file option is not provided need to replace it with default rates
                 this.rates = [{source: '*', rate: 1.0, volume: 1.0, timestamp: 0}];
                 console.log('Using default constant oracle rate');
+            } else if(fs.existsSync(this.config)) {
+                this.rates = require(this.config);
+            } else {
+                console.error(chalk.bold.red(`Config file does not exist: "${this.config}"`));
+                process.exit(1);
             }
         }
         catch (e) {
@@ -181,7 +186,6 @@ class FakeOracle {
                 // does not contain information about which rate to push
                 if(typeof this.rates[this.rate_lookup_index].stop !== 'undefined') {
                     if(this.rates[this.rate_lookup_index].stop === true) {
-                        console.log('Done pushing rates');
                         this.finished = true;
                         break;
                     }
@@ -222,25 +226,29 @@ class FakeOracle {
         }
 
         // push or skip rates for all exchanges defined by the config
+        let rates_pushed = 0;
         this.exchanges.map(exchange => {
             if(exchange.rate_to_push === '' || exchange.volume_to_push === '') {
                 if(verbose_output) console.log(`Skipping rate for "${exchange.source}"`);
             } else {
                 cleos(this.nodeos)(`push action eosio.oracle pushrate '["${exchange.source}", [[${current_timestamp}, "${exchange.rate_to_push}"]], "${exchange.volume_to_push}"]' -p ultra.oracle@pushrate -f`, {swallow:false});
                 if(verbose_output) console.log(`Pushed rate ${exchange.rate_to_push} with volume ${exchange.volume_to_push} for "${exchange.source}"`);
+                rates_pushed++;
             }
-        })
+        });
+        console.log(`Pushed rates for ${rates_pushed} exchanges at timestamp ${current_timestamp}`);
 
         if(!this.finished) return new Promise(resolve => setTimeout(() => this.pushRate(), this.push_interval));
+        console.log('Done pushing rates');
     }
 
     run = async () => {
-        console.log('Started pushing rates');
         this.start_timestamp = await this.getTimestamp();
         this.timestamp_offset = this.rates[0].timestamp;
         this.rate_lookup_index = 0;
         
         // start pushing rates recursively
+        console.log(`Started pushing rates at timestamp ${this.start_timestamp}`);
         await this.pushRate();
     }
 }

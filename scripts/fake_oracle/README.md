@@ -32,7 +32,7 @@ This tool assumes you already have `nodeos` running locally. You have an option 
 
 1. `-c, --config` - Provide configuration for oracle rates pushed over time
 
-This option expects a relative or absolute path to the JSON file containing the rates specification to be pushed on chain. Default value is `config.json`. In case no config is provided and default `config.json` does not exist then all rates pushed will be constant 1 UOS-USD.
+This option expects a relative or absolute path to the JSON file containing the rates specification to be pushed on chain. Default value is `config.json` if `-c` option is used without an argument. In case no config argument is provided then all rates pushed will be constant 1 UOS/USD by default.
 
 2. `-i, --interval` - Specify pushrate interval in ms for all exchanges
 
