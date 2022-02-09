@@ -1,0 +1,21 @@
+{
+    "name": "@ultraio/fake-oracle",
+    "version": "1.0.0",
+    "description": "",
+    "main": "fake_oracle.js",
+    "scripts": {},
+    "bin": {},
+    "publishConfig": {
+        "access": "public"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "args": "^5.0.1",
+        "chalk": "^3.0.0",
+        "eosjs": "^21.0.3",
+        "eosjs-ecc": "^4.0.7",
+        "isomorphic-fetch": "^2.2.1",
+        "util": "^0.12.1"
+    }
+}

@@ -1,0 +1,11 @@
+[
+{"source": "*", "rate":1.0, "volume":1.0, "timestamp": 100},
+{"source": "*", "rate":null, "volume":null, "timestamp": 105},
+{"source": "ubitfinex", "rate":1.0, "volume":1.0, "timestamp": 105},
+{"source": "ubitfinex", "rate":2.0, "volume":1.0, "timestamp": 110},
+{"source": "ukucoin", "rate":2.0, "volume":1.0, "timestamp": 115},
+{"source": "ubitfinex", "rate":null, "volume":null, "timestamp": 120},
+{"source": "*", "rate":3.0, "volume":1.0, "timestamp": 125},
+{"source": "*", "rate":4.0, "volume":1.0, "timestamp": 130},
+{"stop": true, "timestamp": 140}
+]
