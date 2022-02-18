@@ -1,10 +1,9 @@
 #!/bin/bash
 set -x
-
 # Spin Up Nodeos Instance Easily
-BASE_DIR="$(dirname "$(readlink -fm "$0")")"
-TEMPORARY_FILES_DIR="tmpFiles"
-TEMPORARY_CONFIGS_DIR="tmpConfigs"
+BASE_DIR=/opt/eosio
+TEMPORARY_FILES_DIR=""
+TEMPORARY_CONFIGS_DIR=""
 CLEOS="cleos --no-auto-keosd"
 
 # Default Configs
@@ -23,15 +22,15 @@ function usage() {
     -p <public_key> - Public key that goes with -w
     -w <wif_key/sign_key> - A private key or wif.
     -g <public_key> - Set a public genesis key.
+    -r replay from blocks.log.
     -x \"<nodeos command line options>\"
-    -L Launch with xTerm or Gnome-Terminal
    \\n" "$0" 1>&2
    exit 1
 }
 
 # Parse Parameters
 if [ $# -ne 0 ]; then
-    while getopts "hkn:p:w:g:x:aL" opt; do
+    while getopts "hkn:p:w:g:x:aL:r" opt; do
         case "${opt}" in
             h )
                 usage
@@ -67,6 +66,9 @@ if [ $# -ne 0 ]; then
             ;;
             L )
                 RUN_LOCALLY=true
+            ;;
+            r )
+                REPLAY=true
             ;;
             ? )
                 echo "Invalid Option!" 1>&2
@@ -113,9 +115,6 @@ fi
 pkill -f keosd
 keosd --http-max-response-time-ms=${KEOSD_RESPONSE_TIME} &
 sleep ${KEOSD_TIMEOUT}
-
-rm -rf ${BASE_DIR}/data/${TEMPORARY_CONFIGS_DIR}
-rm -rf ${BASE_DIR}/data/${TEMPORARY_FILES_DIR}
 
 mkdir ${BASE_DIR}/data/tmpConfigs
 mkdir ${BASE_DIR}/data/tmpFiles
@@ -180,28 +179,20 @@ fi
 
 echo "\n $cors \n"
 
-DEFAULT_CONFIG="nodeos -e -p ${INSTANCE_NAME} \
+
+if [[ $REPLAY = true ]]; then
+    RUN_OPTIONS="--replay-blockchain"
+else
+    RUN_OPTIONS="--delete-all-blocks --delete-state-history"
+fi
+
+nodeos -e -p ${INSTANCE_NAME} \
         --signature-provider=${PUBLIC_KEY}=KEY:${PRIVATE_KEY} \
         --genesis-json ${BASE_DIR}/data/${TEMPORARY_CONFIGS_DIR}/genesis.json \
         --config-dir ${BASE_DIR}/data/${TEMPORARY_CONFIGS_DIR} \
         -c ${BASE_DIR}/data/${TEMPORARY_CONFIGS_DIR}/config.ini \
         --data-dir ${BASE_DIR}/data/${TEMPORARY_FILES_DIR}/ \
-        --delete-all-blocks \
         --p2p-max-nodes-per-host=100 \
         --disable-replay-opts \
-        --delete-state-history \
-        ${NODEOS_INJECTION}"
-
-if [[ $RUN_LOCALLY = false ]]; then
-    $DEFAULT_CONFIG &
-else
-    if xterm -v | grep -q "XTerm"; then
-        xterm -e "${DEFAULT_CONFIG}" &
-    else
-        gnome-terminal --tab -x bash -c "${DEFAULT_CONFIG}" &
-    fi
-fi
-
-sleep 15
-
-echo "Booter can probably be ran now..."
+        ${RUN_OPTIONS} \
+        ${NODEOS_INJECTION}
