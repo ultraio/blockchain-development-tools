@@ -30,7 +30,29 @@ Depending on the platform the instructions may differ and you should check the i
 
 ### Installing Docker
 
+Plese refer to the [installation guide](https://docs.docker.com/engine/install/)
+
 # Getting development package
+
+### Manual installation
+1. Head on to [releases](https://github.com/ultraio/blockchain-development-tools/releases) and download files from the latest release
+2. Install eosio
+
+* Install dependencies of eosio
+  ```sh
+    sudo apt-get update \
+    && sudo apt-get install -y libicu-dev \
+                          libcurl4-gnutls-dev \
+                          libusb-1.0-0-dev \
+                          libtinfo5
+  ```
+* Install eosio package by running `sudo dpkg -i eosio.<version>.deb`. Make sure the it was installed successfully by running `nodeos --version`. The output should match the package version
+
+3. Install eosio.cdt package using `sudo dpkg -i eosio-cdt-<version>.deb` and then run `eosio-cpp --version` to make sure it was installed successfully
+4. Unpack `tester-javascript` and `eosio-contracts` and follow the [set up process](guides/16_writing-tests-for-smart-contract.md)
+
+### Docker
+Alternatively, you can download a [docker image](https://eu.gcr.io/acoustic-arch-243714/blockchain-development-tools) which comes with the above packages pre-installed and has also some development scripts.
 
 # Further guides
 
