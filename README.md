@@ -20,6 +20,18 @@ sudo apt install git-all
 
 Installing Docker on Ubuntu-18.04 is highly optional since you can run the binaries natively. In case you want to still utilize Docker then you should proceed with [official Docker installation instructions](https://docs.docker.com/engine/install/ubuntu/)
 
+#### Running the ultra docker dev environment
+```sh
+# starting a dev environment
+./scripts/start_docker.sh
+
+# stopping the dev environment
+./scripts/stop_docker.sh
+
+# destroying your dev environment
+./scripts/remove_docker.sh
+```
+
 ## Other platforms
 
 For other platforms binaries are not provided. As such you will have to utilize the Docker image for the purposes of running a node, compiling smart contracts and running tests

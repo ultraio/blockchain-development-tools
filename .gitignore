@@ -1,3 +1,5 @@
 *node_modules
 scripts/fake_oracle/config.json
 .idea
+release
+Dockerfile

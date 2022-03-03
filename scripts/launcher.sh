@@ -1,10 +1,13 @@
 #!/bin/bash
 set -x
 # Spin Up Nodeos Instance Easily
-BASE_DIR=/opt/eosio
+BASE_DIR=/opt/ultra_workdir
 TEMPORARY_FILES_DIR=""
 TEMPORARY_CONFIGS_DIR=""
 CLEOS="cleos --no-auto-keosd"
+
+mkdir -p /opt/ultra_workdir/data/config
+cp eosio/data/config/. ultra_workdir/data/config
 
 # Default Configs
 RUN_LOCALLY=false
@@ -183,7 +186,7 @@ echo "\n $cors \n"
 if [[ $REPLAY = true ]]; then
     RUN_OPTIONS="--replay-blockchain"
 else
-    RUN_OPTIONS="--delete-all-blocks --delete-state-history"
+    # RUN_OPTIONS="--delete-all-blocks --delete-state-history"
 fi
 
 nodeos -e -p ${INSTANCE_NAME} \
