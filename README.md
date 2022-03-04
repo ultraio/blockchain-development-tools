@@ -23,14 +23,19 @@ Installing Docker on Ubuntu-18.04 is highly optional since you can run the binar
 #### Running the ultra docker dev environment
 ```sh
 # starting a dev environment
-./scripts/start_docker.sh
+./scripts/start_docker.sh <WORK DIRECTORY PATH> <IMAGE NAME> 
+```
+Both the `work directory` and the `image name` are optional. 
+The work path will default to `$HOME/ultra_workdir` on all operating systems. 
 
+```sh
 # stopping the dev environment
 ./scripts/stop_docker.sh
 
 # destroying your dev environment
 ./scripts/remove_docker.sh
 ```
+
 
 ## Other platforms
 
