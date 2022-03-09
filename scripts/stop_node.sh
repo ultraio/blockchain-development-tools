@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pkill nodeos
+pkill -f nodeos
