@@ -32,7 +32,7 @@ fi
 docker exec -d -i $NAME ./scripts/start_node
 
 # Enter Docker Container
-if [[ $IS_LINUX_BASED -eq -1 ]]; then
+if [[ $IS_LINUX_BASED -eq 1 ]]; then
   echo "Entering Docker Container through Linux"
   docker exec -it ultra-dev-environment bash
 else
