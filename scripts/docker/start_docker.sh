@@ -28,9 +28,6 @@ else
   docker start $NAME
 fi
 
-# Starting Nodes, and Additional Services Here
-docker exec -d -i $NAME ./scripts/start_node
-
 # Enter Docker Container
 if [[ $IS_LINUX_BASED -eq 1 ]]; then
   echo "Entering Docker Container through Linux"
