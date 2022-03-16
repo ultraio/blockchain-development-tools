@@ -23,7 +23,7 @@ echo "Starting Ultra Blockchain Image"
 if [ ! "$(docker ps -q -f name=$NAME --all)" ]; then
   echo "Docker Volume Mounted at $HOME/ultra_workdir"
 
-  docker run -dit -p 8888:8888 -p 9876:9876 -v $HOME/ultra_workdir --name $NAME $IMAGE
+  docker run -dit -p 8888:8888 -p 9876:9876 -v $HOME/ultra_workdir:/opt/ultra_workdir --name $NAME $IMAGE
 else
   docker start $NAME
 fi
