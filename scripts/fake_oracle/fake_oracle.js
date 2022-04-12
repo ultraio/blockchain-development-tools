@@ -175,7 +175,7 @@ class FakeOracle {
         this.trading_volume_symbol = split[1];
     }
 
-    getTimestamp = async () => Math.floor(Date.parse(JSON.parse(await cleos(this.nodeos)(`get info`, {stdout:true})).head_block_time) / 1000);
+    getTimestamp = async () => Math.floor(Date.now() / 1000);
 
     pushRate = async () => {
         const current_timestamp = await this.getTimestamp();
