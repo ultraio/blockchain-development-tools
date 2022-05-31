@@ -3,3 +3,4 @@ scripts/fake_oracle/config.json
 .idea
 release
 Dockerfile
+.DS_Store
