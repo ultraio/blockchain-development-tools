@@ -117,28 +117,28 @@ technical support and/or maintenance services.
     defined above;
 
 (b) modify, translate or alter the Ultra Blockchain SDK, including but
-    > not limited to, using macros or any other automation technologies
-    > that could extend the functionality or use of the Ultra Blockchain
-    > SDK or could result in any other derivative work. In the event
-    > modifications or derivative works are performed by You, Ultra
-    > shall own such modifications, alterations or derivative works by
-    > operation of the Agreement;
+    not limited to, using macros or any other automation technologies
+    that could extend the functionality or use of the Ultra Blockchain
+    SDK or could result in any other derivative work. In the event
+    modifications or derivative works are performed by You, Ultra
+    shall own such modifications, alterations or derivative works by
+    operation of the Agreement;
 
 (c) reverse-engineer, decompile, disassemble, partially or completely,
-    > the Ultra Blockchain SDK;
+    the Ultra Blockchain SDK;
 
 (d) remove or alter any identification, proprietary notice, labels or
-    > trademarks of Ultra and/or its licensors which appear on or in the
-    > Ultra Blockchain SDK;
+    trademarks of Ultra and/or its licensors which appear on or in the
+    Ultra Blockchain SDK;
 
 (e) sublicense, assign, license, sell, lease, rent, share the use of the
-    > Ultra Blockchain SDK or otherwise transfer it, or permit any third
-    > party to use the Ultra Blockchain SDK without the prior written
-    > consent of Ultra;
+    Ultra Blockchain SDK or otherwise transfer it, or permit any third
+    party to use the Ultra Blockchain SDK without the prior written
+    consent of Ultra;
 
 (f) use the Ultra Blockchain SDK in violation of any Country, Treaty,
-    > Federal or State law, regulation or rules, including laws with
-    > respect to misuse or improper use of information.
+    Federal or State law, regulation or rules, including laws with
+    respect to misuse or improper use of information.
 
 **4. OTHER RIGHTS**
 
