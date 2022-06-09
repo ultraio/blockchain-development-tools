@@ -1,1 +1,0 @@
-node /opt/scripts/fake_oracle/fake_oracle.js -c /opt/scripts/fake_oracle/config_example.json
