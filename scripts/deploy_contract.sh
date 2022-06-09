@@ -1,4 +1,0 @@
-#!/bin/bash
-ACCOUNT_NAME=$1
-CONTRACT_DIR=$2
-cleos set contract $ACCOUNT_NAME $CONTRACT_DIR -p $ACCOUNT_NAME
