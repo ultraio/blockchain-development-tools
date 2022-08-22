@@ -1,7 +1,7 @@
 #!/bin/bash
 # set -x
 
-IMAGE=${1:-"ultra-dev:latest"}
+IMAGE=${1:-"quay.io/ultra.io/3rdparty-devtools:latest"}
 NAME=ultra-dev-environment
 
 case "$OSTYPE" in
@@ -37,6 +37,6 @@ else
   winpty docker exec -it ultra-dev-environment bash
 fi
 
-echo "Docker Image is still running with name 'ultra-dev-environment' please use 'stop_docker.sh' to stop the container."
+echo "Docker Image is still potentially running with name 'ultra-dev-environment' please use 'stop_docker.sh' to stop the container. Or some other process already uses the port 8888 or 9876"
 
 exit 0
